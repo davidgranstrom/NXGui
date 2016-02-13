@@ -112,7 +112,9 @@ NXGuiUnit {
         var parameter = parameters[name].box;
 
         parameter !? {
-            parameter.value = val;
+            defer {
+                parameter.value = val;
+            }
         }
     }
 
