@@ -18,14 +18,14 @@ NXGui {
         win.view.layout_(grid);
     }
 
-    front {
-        this.resize;
-        ^win.front;
-    }
-
     add {|unit|
         grid.add(unit.container, unitCounter mod: 3, unitCounter div: 3);
         unitCounter = unitCounter + 1;
+    }
+
+    front {
+        this.resize;
+        ^win.front;
     }
 
     resize {
@@ -79,10 +79,14 @@ NXGuiUnit {
         var box = NumberBox();
 
         box.fixedSize_(Size(70,25));
+
+        // set defaults
         options[\value] !? { box.value = options[\value] };
         options[\action] !? { box.action = options[\action] };
 
-        parameters[name] !? { "A parameter with name % already exists and will be overwritten".format(name).warn; };
+        parameters[name] !? {
+            "A parameter with name % already exists and will be overwritten".format(name).warn;
+        };
         parameters[name] = (box: box, view: view); // store the number box
 
         layout = HLayout(label, box).spacing_(gridSpacing).margins_(gridMargins);
